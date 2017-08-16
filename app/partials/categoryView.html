@@ -1,0 +1,63 @@
+<section>
+  <nav id="451qa_nav_hdr" class="nav">
+    <ul>
+      <li class="hidden-sm hidden-xs">
+        <span class="" ng-click="toggleNav()"><i class="fa fa-bars" ng-class="{ 'text-info': navStatus.visible }"></i></span>
+      </li>
+      <li>
+        <span id="451_lbl_curcat" class="text-primary" ng-bind-html="currentCategory.Name || '  {{'Categories' | r | xlat}}'"></span>
+      </li>
+      <li class="pull-right">
+        <a href="search">
+                    <span><i class="fa fa-search text-primary"></i></span>
+                </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="row">
+    <aside class="col-md-3 visible-md visible-lg" ng-if="navStatus.visible">
+      <div class="panel panel-default panel-nav">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+                        {{'Category List' | r | xlat}}
+                    </h3>
+        </div>
+        <nav class="nav 451qa_sidenav panel-body">
+          <ul>
+            <categorycollapse tree='tree'></categorycollapse>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <div ng-class="{ 'col-md-9': navStatus.visible, 'col-md-12': !navStatus.visible }" style="text-align: center;">
+
+      <!-- <div class="bs-example"> -->
+        <!-- Button HTML (to Trigger Modal) -->
+<!--         <a href="#myModal" class="btn btn-lg btn-primary hidden-xs" data-toggle="modal" style="background: #24b5e8;border: #24b5e8;">Click Here For Step By Step Instructions</a>
+        <a href="#myModal" class="btn btn-lg btn-primary hidden-sm hidden-md hidden-lg" data-toggle="modal" style="background: #24b5e8;border: #24b5e8;">Click Here For<br>Step By Step Instructions</a> -->
+
+        <!-- Modal HTML -->
+        <!-- <div id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Sandals Tutorial</h4>
+              </div>
+              <div class="modal-body">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/Dsg8JccRZCw?ecver=1" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      <!-- </div> -->
+
+      <categorylistview></categorylistview>
+
+      <loadingindicator ng-show="productLoadingIndicator" title="{{'Please wait while we fetch all products' | r | xlat}}" />
+
+      <productlistview></productlistview>
+
+    </div>
+  </div>
+</section>

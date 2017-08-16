@@ -1,0 +1,19 @@
+<footer class="container copyright-view footerBox">
+    <div class="col-md-4 col-md-offset-1 col-md-push-7">
+        <div class="row">
+            <p class="text-center">
+                <a href="http://public.four51.com/help-information/" target="_blank">
+                    <img style="width:63%;" src="images/thumbprint-Logo.png"/>
+                </a>
+            </p>
+            <p class="text-center">
+                {{'Copyright' | xlat}} © {{year}}<br /> thumbprint <br>{{'All Rights Reserved' | xlat}}.<br />
+                <span ng-if="!(user.Permissions.contains('HideTerms'))">
+                    <a class="btn btn-default btn-sm" href="conditions">
+                        {{'Conditions of Use' | xlat}}
+                    </a>
+                </span>
+            </p>
+        </div>
+    </div>
+</footer>
