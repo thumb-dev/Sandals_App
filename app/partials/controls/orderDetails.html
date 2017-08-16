@@ -1,0 +1,153 @@
+<div class="panel panel-default panel-order">
+  <div class="panel-heading" ng-class="{'no': cart_order.$invalid, 'yes': !cart_order.$invalid, 'open': checkOutSection == 'order' }">
+    <h3 ng-click="checkOutSection = 'order'" class="panel-title panel-primary">
+            <i class="pull-left" ng-class="{'fa fa-warning': cart_order.$invalid, 'fa fa-check-circle': !cart_order.$invalid }"></i>
+            {{'Order' | r | xlat}}
+            <i class="pull-right" ng-class="{'fa fa-caret-up': checkOutSection == 'order', 'fa fa-caret-down': checkOutSection == 'shipping' || checkOutSection == 'billing' }"></i>
+        </h3>
+  </div>
+  <div collapse="checkOutSection != 'order'" class="panel-body">
+    <form name="cart_order" novalidate="">
+      <div class="view-form-icon" ng-if="user.Permissions.contains('EditPOID')" ng-invalid>
+        <div class="input-group">
+          <!--<label class="required">{{('Order' | r) + ' '  + ('ID' | r) | xlat}}</label>-->
+          <!--<input class="form-control" name="orderid" ng-disabled='currentOrder.autoID' type='text' ng-model="currentOrder.ExternalID" required ui-mask="{{currentOrder.autoID ? null : user.Company.POIDMask}}"></input>-->
+          <span ng-if="user.Permissions.contains('AllowAutoGenPOID')" class="input-group-addon">
+                            <input type='checkbox' ng-click="currentOrder.ExternalID = currentOrder.autoID ? null : 'auto'" ng-model='currentOrder.autoID' />
+                        </span>
+          <span class="input-group-addon" ng-show="user.Permissions.contains('AllowAutoGenPOID')">{{('Auto' | r) + ' ' + ('ID' | r) | xlat}}</span>
+          <i class="fa">#</i>
+        </div>
+      </div>
+      <div class="view-form-icon" ng-if="user.Permissions.contains('Comments')">
+        <div>
+          <label ng-show="currentOrder.Comments">{{'Comments' | r | xlat}}:</label>
+          <div class="deskLabel">
+            <textarea class="form-control" rows="5" cols="100" ng-model="currentOrder.Comments" ng-attr-placeholder="{{'Comments' | r | xlat}}..." />
+            <i class="fa fa-edit"></i>
+          </div>
+        </div>
+      </div>
+      <div class="view-form-icon" ng-if="user.Permissions.contains('CostCenterPerOrder') && !user.Permissions.contains('CostCenterPerLine')">
+        <div ng-class="{'view-form-select': !currentOrder.CostCenter, '': currentOrder.CostCenter }">
+          <label class="required">{{'Does User Need Approval?' | r | xlat}}</label>
+          <div class="deskLabel">
+            <select class="form-control" required ng-if="user.CostCenters.length > 1 && !user.Permissions.contains('FreeFormCostCenter')" ng-options="center.Name as center.Name for center in user.CostCenters" ng-model="currentOrder.CostCenter"><option value=""></option></select>
+            <input class="form-control" ng-if="user.Permissions.contains('FreeFormCostCenter')" ng-model="currentOrder.CostCenter" type='text' required placeholder="{{'Cost Center' | r | xlat}}" />
+            <span ng-if="user.CostCenters.length == 1 && !user.Permissions.contains('FreeFormCostCenter')">{{currentOrder.CostCenter}}</span>
+            <i class="" ng-if="user.CostCenters.length > 1 && !user.Permissions.contains('FreeFormCostCenter')"></i>
+          </div>
+        </div>
+      </div>
+
+
+      <div ng-if="stationeryDetails == true" class="alert alert-info text-center" style="margin-top:15px;"><span><input type="checkbox"
+                       required="required"
+                       ng-model="confirmTried.value2"
+                       name="Confirmed">
+        &nbsp;By checking this box, I have reviewed and confirm all the information and artwork for this business card is correct.</span>
+        <br/>
+      </div>
+
+      <div ng-if="cartCC == true" class="alert alert-warning text-center" style="margin-top:15px;"><span><input type="checkbox"
+                         required="required"
+                         ng-model="confirmTried.value1"
+                         name="Confirmed">
+          By checking this box I have reviewed and agree to the Sandals Scrim policy.</span>
+        <br/>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" style="margin-top: 10px;">
+            Review Sandals Scrim Policy
+          </button>
+      </div>
+
+      <!--<div ng-show="currentOrder.OrderFields" ng-if="field.Name !== 'sandals_rush'">-->
+      <div ng-repeat="field in currentOrder.OrderFields" ng-if="field.Name !== 'sandals_rush'">
+        <hr />
+        <div class="form-group">
+          <div class="row" ng-if="user.Username === 'HR_Manager'">
+            <div class="col-md-12">
+              <octextfield customfield="sandalsOrderFields.Sandals_HR_PO"></octextfield>
+            </div>
+          </div>
+        </div>
+        <br/>
+      </div>
+
+      <div ng-show="currentOrder.OrderFields">
+        <hr />
+        <div class="form-group">
+          <div class="row" style="">
+            <div class="col-md-12">
+              <octextfield customfield="sandalsOrderFields.Sandals_Display_Selection"></octextfield>
+            </div>
+          </div>
+          <div class="row" style="">
+            <div class="col-md-12">
+              <octextfield customfield="sandalsOrderFields.Sandals_Width"></octextfield>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="">
+              <octextfield customfield="sandalsOrderFields.Sandals_Height"></octextfield>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+<div aria-labelledby="mySmallModalLabel" class="modal fade Contract" role="dialog" tabindex="-1" style="z-index: 9999;">
+  <div class="modal-dialog modal-sm" role="document" style="">
+    <div class="modal-content text-center" style="display: flex;justify-content: center;"><img class="contractImg" alt="" src="https://thumbprint.box.com/shared/static/merlws76qyy4r5dulya2op63at36x84h.png" /></div>
+    <br/>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="z-index: 9999;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title modalTextTitle" id="exampleModalLongTitle" style="display: flex;justify-content: space-between;"><img src="http://i65.tinypic.com/axyah5.png" height="20%" width="20%" alt="Sandals">&nbsp;&nbsp;Window & Wall Display Agreement&nbsp;&nbsp;<img src="http://i67.tinypic.com/nxnzw5.png" height="20%" width="20%" alt="Beaches"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <strong>ENGLISH</strong><br><br>I, [Agency Representative], hereby confirm on behalf of a joint participation with Sandals & Beaches Resorts towards the production and use of branded Sandals & Beaches Resorts window and/or wall displays. Agency
+        information to be placed on display may include, but are not limited to: agency name, phone number, and website. Agency is responsible for verification of proper City permits prior to installation. Display must remain up for one year (1) year
+        after installment. Order will be processed upon submission of signed and completed order form.<br>
+        <br> By acknowledging this agreement, I understand that:<br>
+        <br> • Sandals & Beaches Resorts will waive the full cost of up to four (4) displays<br> • A charge of $99 will apply for each additional display<br> • Agency will be responsible for installation costs<br>
+        <br>
+        <br>
+        <br>
+        <strong>SPANISH</strong><br><br> Contrato de Exhibición en Escaparate<br>
+        <br> Yo, [Representante de la Agencia], declaro como parte de la cooperación de participación entre un servidor y Sandals & Beaches Resorts, para la producción y uso de impresos para escaparate con las marcas de Sandals & Beaches Resorts. La información
+        de la agencia que será colocada en el impreso puede incluir sin limitar a: el nombre de la agencia, número telefónico y sitio web. La agencia será responsable de verificar los permisos locales pertinentes para poder instalarse. El escaparate deberá
+        permanecer durante un (1) año después de su colocación. El pedido será procesado a la entrega del formulario de pedido, debidamente llenado y firmado.<br>
+        <br> Reconociendo este contrato, entiendo y acepto que:<br>
+        <br> • Sandals & Beaches Resorts solventará el costo total de un máximo de cuatro (4) impresos de escaparate<br> • Cada impreso de escaparate adicional, generará un costo de US$99 dólares<br> • La agencia será responsable por el costo de instalación<br>
+        <br>
+        <br>
+        <br>
+        <strong>PORTUGUESE</strong><br><br> Contrato para Display Perfurado de Janela e Parede<br>
+        <br> Eu, [Representante da agência], por meio deste confirmo a participação em conjunto com os Sandals e Beaches Resorts na produção e uso de displays perfurados de parede ou/e de janela. A informação da agência em exposição pode incluir, mas
+        não está limitada à: nome da agência, número de telefone e website. A agência é responsável pela verificação das licenças municipais necessárias antes da instalação. O material em display deve permanecer pelo prazo de um (1) ano a contar da data
+        de instalação. Os pedidos serão processados a partir do envio do formulário preenchido e assinado.<br>
+        <br> Ao assinar este contrato, eu concordo que:<br>
+        <br> • Os Sandals Resorts & Beaches Resorts não irão cobrar por até quatro (4) displays<br> • Uma taxa de US$99 vai ser cobrada para cada display adicional<br> • A agência vai ser responsável pelo custo de instalação<br> • material será recebido
+        entre 4-6 semanas<br>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

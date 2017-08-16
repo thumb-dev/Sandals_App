@@ -1,0 +1,38 @@
+<style >.bannerImage {display:none !important}</style>
+<div class="451qa_prod_item row product">
+    <div class="col-xs-12 text-center">
+        <a class="productFig" href="product/{{LineItem.Product.InteropID}}">
+            <figure ng-show="LineItem.Variant.SmallImageUrl || LineItem.Product.SmallImageUrl" >
+                <img ng-src="{{LineItem.Variant.SmallImageUrl || LineItem.Product.SmallImageUrl}}"/>
+            </figure>
+            <div class="empty" ng-hide="LineItem.Variant.SmallImageUrl || LineItem.Product.SmallImageUrl">
+                <span class="fa empty"><i class="fa fa-camera"></i></span>
+            </div>
+           <!--  <div class="product-hover">
+                <h3 class="text-center hidden-xs">{{LineItem.Product.Name}}</h3>
+                 <div>
+                     ! <p ng-bind-html="trustedDescription(LineItem.Product)" ng-show="LineItem.Product.Description" ></p> 
+                      <p ng-show="LineItem.PriceSchedule.PriceBreaks[0]" ng-if="!(user.Permissions.contains('HidePricing'))">
+                         {{LineItem.PriceSchedule.PriceBreaks[0].Quantity}}
+                         <span ng-show="LineItem.Product.QuantityMultiplier > 1">(x {{LineItem.Product.QuantityMultiplier}})</span>
+                         {{'for' | xlat}} {{LineItem.PriceSchedule.PriceBreaks[0].Price | culturecurrency}}
+                     </p>
+                     <p ng-show="LineItem.Product.UnitOfMeasure">
+                         {{'Unit of Measure' | r | xlat}}: {{LineItem.Product.UnitOfMeasure}}
+                     </p>
+
+                     <p ng-show="LineItem.Product.DisplayInventory && inventoryDisplay(LineItem.Product, LineItem.Variant) != undefined">
+                         {{'Quantity Available' | r | xlat}}: {{inventoryDisplay(LineItem.Product, LineItem.Variant) }}
+                     </p>
+                 </div> 
+            </div> -->
+            <!-- <h3 class="catName ng-binding" ng-bind-html="LineItem.Product.Name" style="color: pink;"></h3> -->
+            <p class="text-center ng-binding" style="color: black; font-weight: bold; margin-bottom: none;" ng-bind-html="LineItem.Product.Name" ng-mouseover=""/>
+ <!--            <div ng-show="LineItem.PriceSchedule.PriceBreaks[0]" ng-if="!(user.Permissions.contains('HidePricing')) || LineItem.PriceSchedule.PriceBreaks[0].Price >= 0 || LineItem.PriceSchedule.PriceBreaks[0].Price == null">
+                {{LineItem.PriceSchedule.PriceBreaks[0].Quantity}}
+                <span ng-show="LineItem.Product.QuantityMultiplier > 1">(x {{LineItem.Product.QuantityMultiplier}})</span>
+                {{'for' | xlat}} {{LineItem.PriceSchedule.PriceBreaks[0].Price | culturecurrency}}
+            </div> -->
+        </a>
+    </div>
+</div>
